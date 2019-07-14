@@ -1,6 +1,6 @@
 {
-  "name": "practice-app",
-  "short_name": "practice-app",
+  "name": "Practice app",
+  "short_name": "Practice app",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
