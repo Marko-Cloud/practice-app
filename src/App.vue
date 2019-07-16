@@ -3,7 +3,10 @@
 
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/fibonacci">Fibonacci app</router-link>
+      <router-link to="/fibonacci">Fibonacci sequence</router-link>
+      <router-link to="/todo">To Do</router-link>
+      <router-link to="/count-down">Count Down</router-link>
+      <router-link to="/viewport-component">Viewport component</router-link>
     </div>
     <router-view/>
 
