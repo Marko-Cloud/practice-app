@@ -9,6 +9,7 @@
     <p>- And ofcourse if you are not amazed.....act like you are. I'm practicing for f*** sake.</p>
 
     <!-- git add -A && git commit -m "Your Message" -->
+    <!-- git push origin master -->
 
   </div>
 </template>
