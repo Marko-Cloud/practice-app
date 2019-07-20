@@ -30,8 +30,7 @@ export default {
       fibonacciLimit: Number,
       fibonacciX: 1,
       fibonacciY: 0,
-      fibonacciZ: 0,
-      fibonacciSeqNum: 0
+      fibonacciZ: 0
     }
   },
 
@@ -44,13 +43,20 @@ export default {
         return;
       }
 
+      if (this.fibonacciZ == 0) {
+        this.createElement();
+
+        this.fibonacciZ = 1;
+        this.startSequence();
+      }
+
       this.fibonacciZ = this.fibonacciX;
+
       this.fibonacciX = this.fibonacciX + this.fibonacciY;
+
       this.fibonacciY = this.fibonacciZ;
 
-      this.fibonacciSeqNum = this.fibonacciZ--;
-
-      if ( this.fibonacciSeqNum >= this.fibonacciLimit ) {
+      if ( this.fibonacciZ >= this.fibonacciLimit ) {
         return console.log('Done !!!');
       
       } else {
@@ -61,7 +67,7 @@ export default {
     },
     createElement() {
       let sequenceNumber = document.createElement('p');
-      sequenceNumber.innerHTML = this.fibonacciSeqNum;
+      sequenceNumber.innerHTML = this.fibonacciZ;
 
       document.getElementById('result-container').appendChild(sequenceNumber);
     }
