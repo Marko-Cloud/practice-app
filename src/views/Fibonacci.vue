@@ -30,51 +30,40 @@ export default {
       fibonacciLimit: Number,
       fibonacciX: 1,
       fibonacciY: 0,
-      fibonacciZ: 0
+      fibonacciZ: 0,
+      fibonacciSeqNum: 0
     }
   },
 
   methods: {
     startSequence() {
       debugger;
-      // 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
-      // x, y, z 
-
       if (document.getElementById('input-limiter').value == '') {
         alert("Put a number in input field....we don't wanna overdo it :) !!!");
 
         return;
       }
 
-      // if (this.fibonacciZ == 0) {
-      //   let sequenceNumber = document.createElement('p');
-      //   sequenceNumber.innerHTML = '0, 1, 1';
-
-      //   document.getElementById('result-container').appendChild(sequenceNumber);
-      //   this.fibonacciZ = 1;
-
-      //   this.startSequence();
-      // }
-
+      this.fibonacciZ = this.fibonacciX;
+      this.fibonacciX = this.fibonacciX + this.fibonacciY;
       this.fibonacciY = this.fibonacciZ;
 
-      this.fibonacciZ = this.fibonacciX + this.fibonacciY;
+      this.fibonacciSeqNum = this.fibonacciZ--;
 
-
-
-      if ( this.fibonacciZ >= this.fibonacciLimit ) {
-
+      if ( this.fibonacciSeqNum >= this.fibonacciLimit ) {
         return console.log('Done !!!');
       
       } else {
-        let sequenceNumber = document.createElement('p');
-        sequenceNumber.innerHTML = this.fibonacciZ;
-
-        document.getElementById('result-container').appendChild(sequenceNumber);
-
+        this.createElement();
         this.startSequence();
       }
 
+    },
+    createElement() {
+      let sequenceNumber = document.createElement('p');
+      sequenceNumber.innerHTML = this.fibonacciSeqNum;
+
+      document.getElementById('result-container').appendChild(sequenceNumber);
     }
   }
 }
