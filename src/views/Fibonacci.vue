@@ -11,7 +11,8 @@
 
     <div class="input-container">
       <input id="input-limiter" type="number" v-model="fibonacciLimit">
-      <button @click="startSequence">Go Fibonacci Go</button>
+      <button @click="startSequenceExternaly">Go Fibonacci Go</button>
+      <!-- <button @click="startSequenceLocaly">Go Fibonacci Go</button> -->
     </div>
 
     <div id="result-container">
@@ -22,12 +23,20 @@
 </template>
 
 <script>
+
+import fibonacciSequence from '../assets/utils/fibonacciMethod';
+
 export default {
   name: 'fibonacci',
 
   data() {
     return {
       fibonacciLimit: Number,
+
+      // We use this for externall function
+      fibonacciNumbersArray: [],
+      
+      // we use this one for local function
       fibonacciX: 1,
       fibonacciY: 0,
       fibonacciZ: 0
@@ -35,7 +44,22 @@ export default {
   },
 
   methods: {
-    startSequence() {
+    // For purpose sake i made one methode as utility function.....separating stuff....because of....reasons
+    startSequenceExternaly() {
+      if (document.getElementById('input-limiter').value == '') {
+        alert("Put a number in input field....we don't wanna overdo it :) !!!");
+
+        return;
+      }
+
+      fibonacciSequence(this.fibonacciLimit);
+
+      // this.fibonacciNumbersArray = array;
+      console.log(this.fibonacciNumbersArray);
+    },
+
+    // This one is local function
+    startSequenceLocaly() {
       debugger;
       if (document.getElementById('input-limiter').value == '') {
         alert("Put a number in input field....we don't wanna overdo it :) !!!");
@@ -47,7 +71,7 @@ export default {
         this.createElement();
 
         this.fibonacciZ = 1;
-        this.startSequence();
+        this.startSequenceLocaly();
       }
 
       this.fibonacciZ = this.fibonacciX;
@@ -61,7 +85,7 @@ export default {
       
       } else {
         this.createElement();
-        this.startSequence();
+        this.startSequenceLocaly();
       }
 
     },
