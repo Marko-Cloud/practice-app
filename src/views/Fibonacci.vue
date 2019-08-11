@@ -55,7 +55,7 @@ export default {
       fibonacciSequence(this.fibonacciLimit);
 
       // this.fibonacciNumbersArray = array;
-      console.log(this.fibonacciNumbersArray);
+      // console.log(this.fibonacciNumbersArray);
     },
 
     // This one is local function
