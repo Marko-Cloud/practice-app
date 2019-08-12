@@ -37,9 +37,9 @@ export default {
       fibonacciNumbersArray: [],
       
       // we use this one for local function
-      fibonacciX: 1,
-      fibonacciY: 0,
-      fibonacciZ: 0
+      // fibonacciX: 1,
+      // fibonacciY: 0,
+      // fibonacciZ: 0
     }
   },
 
@@ -54,47 +54,56 @@ export default {
 
       fibonacciSequence(this.fibonacciLimit);
 
-      // this.fibonacciNumbersArray = array;
-      // console.log(this.fibonacciNumbersArray);
+      if (sessionStorage.getItem("fibonacciArray") !== null) {
+        this.fibonacciNumbersArray = JSON.parse(sessionStorage.getItem("fibonacciArray"));
+
+        console.log(this.fibonacciNumbersArray);
+
+        this.fibonacciNumbersArray.forEach(function(arrayNumber) {
+          let sequenceNumber = document.createElement('p');
+          sequenceNumber.innerHTML = arrayNumber;
+          document.getElementById('result-container').appendChild(sequenceNumber);
+        });
+      }
     },
 
-    // This one is local function
-    startSequenceLocaly() {
-      debugger;
-      if (document.getElementById('input-limiter').value == '') {
-        alert("Put a number in input field....we don't wanna overdo it :) !!!");
+    // This one is local function ... uncoment for local version of Fibonacci function
+    // startSequenceLocaly() {
+    //   debugger;
+    //   if (document.getElementById('input-limiter').value == '') {
+    //     alert("Put a number in input field....we don't wanna overdo it :) !!!");
 
-        return;
-      }
+    //     return;
+    //   }
 
-      if (this.fibonacciZ == 0) {
-        this.createElement();
+    //   if (this.fibonacciZ == 0) {
+    //     this.createElement();
 
-        this.fibonacciZ = 1;
-        this.startSequenceLocaly();
-      }
+    //     this.fibonacciZ = 1;
+    //     this.startSequenceLocaly();
+    //   }
 
-      this.fibonacciZ = this.fibonacciX;
+    //   this.fibonacciZ = this.fibonacciX;
 
-      this.fibonacciX = this.fibonacciX + this.fibonacciY;
+    //   this.fibonacciX = this.fibonacciX + this.fibonacciY;
 
-      this.fibonacciY = this.fibonacciZ;
+    //   this.fibonacciY = this.fibonacciZ;
 
-      if ( this.fibonacciZ >= this.fibonacciLimit ) {
-        return console.log('Done !!!');
+    //   if ( this.fibonacciZ >= this.fibonacciLimit ) {
+    //     return console.log('Done !!!');
       
-      } else {
-        this.createElement();
-        this.startSequenceLocaly();
-      }
+    //   } else {
+    //     this.createElement();
+    //     this.startSequenceLocaly();
+    //   }
 
-    },
-    createElement() {
-      let sequenceNumber = document.createElement('p');
-      sequenceNumber.innerHTML = this.fibonacciZ;
+    // },
+    // createElement() {
+    //   let sequenceNumber = document.createElement('p');
+    //   sequenceNumber.innerHTML = this.fibonacciZ;
 
-      document.getElementById('result-container').appendChild(sequenceNumber);
-    }
+    //   document.getElementById('result-container').appendChild(sequenceNumber);
+    // }
   }
 }
 </script>
