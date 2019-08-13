@@ -6,7 +6,7 @@
       <img src="../assets/img/fibonacci.jpg" alt="Fibonacci">
     </div>
 
-    <p>Enter a number in a input field, and Fibonacci's sequence will magically stop before hitting that number.</p>
+    <p>Enter a number in a input field and you will get equal amount of numbers from Fibonacci sequence.</p>
     <p>Witchcraft !!!</p>
 
     <div class="input-container">
@@ -17,7 +17,7 @@
 
     <div id="result-container">
       <h1>And here is the sequnece:</h1>
-
+      <p v-for="item in fibonacciNumbersArray">{{item}}</p>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
 
   data() {
     return {
-      fibonacciLimit: Number,
+      fibonacciLimit: null,
 
       // We use this for externall function
       fibonacciNumbersArray: [],
@@ -46,8 +46,16 @@ export default {
   methods: {
     // For purpose sake i made one methode as utility function.....separating stuff....because of....reasons
     startSequenceExternaly() {
-      if (document.getElementById('input-limiter').value == '') {
-        alert("Put a number in input field....we don't wanna overdo it :) !!!");
+      this.fibonacciNumbersArray = [];
+
+      if (this.fibonacciLimit == null) {
+        alert("Put a number in input field....we don't wanna overdo it with infinite loop :) !!!");
+
+        return;
+      }
+
+      if (this.fibonacciLimit == 1) {
+        alert("Awwww jizz....do more than 1");
 
         return;
       }
@@ -58,12 +66,6 @@ export default {
         this.fibonacciNumbersArray = JSON.parse(sessionStorage.getItem("fibonacciArray"));
 
         console.log(this.fibonacciNumbersArray);
-
-        this.fibonacciNumbersArray.forEach(function(arrayNumber) {
-          let sequenceNumber = document.createElement('p');
-          sequenceNumber.innerHTML = arrayNumber;
-          document.getElementById('result-container').appendChild(sequenceNumber);
-        });
       }
     },
 
