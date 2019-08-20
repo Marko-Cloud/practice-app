@@ -2,23 +2,36 @@
   <div class="app-container">
     <h1>To do list :D</h1>
 
-    <p>And all time favorite,  A TO DO LIST !!!!!</p>
-    <p>This one needs to have a datebase connected......Heavens be blessed !!!</p>
+    <div class="set-task-container">
+      <input placeholder="Enter task title" type="text">
+      <input placeholder="Enter task description" type="text">
+      <button>Create task</button>
+    </div>
+
+    <ToDoItem />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import ToDoItem from '../components/to-do-item.component';
 
 export default {
   name: 'todo',
 
   components: {
-
+    ToDoItem
   }
 }
 </script>
 
 <style lang="scss">
+
+.set-task-container {
+  margin-bottom: 40px;
+}
+
+input {
+  margin-right: 20px;
+}
 
 </style>

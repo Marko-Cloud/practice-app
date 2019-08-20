@@ -5,8 +5,7 @@
 
     <p>So yeah ... It's preety much self explanatory.</p>  
     <p>- Click on a one of the links up there and see what have I done so far, or what i plan to do.</p>
-    <p>- Yes, I am trying my best to make it look as ugly and trashy as possible. It's my pride and joy.</p>
-    <p>- And ofcourse if you are not amazed.....act like you are. I'm practicing for f*** sake.</p>
+    <p>- Yes, it's trashy, but styling isn't point of practice here...JS is.</p>
 
     <!-- git add -A && git commit -m "Your Message" -->
     <!-- git push origin master -->
@@ -18,11 +17,7 @@
 // @ is an alias to /src
 
 export default {
-  name: 'home',
-
-  components: {
-
-  }
+  name: 'home'
 }
 </script>
 
