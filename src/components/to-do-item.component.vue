@@ -1,16 +1,16 @@
 <template>
-  <div class="to-do-item">
-    <button class="close-button"></button>
+  <div class="to-do-item" :class="{ 'done': isChecked }">
+    <button class="close-button" @click="removeItem"></button>
 
     <div class="to-to-item__descr">
-      <h4>Naslov taska</h4>
-      <p>Opis taska</p>
+      <h4>{{ title }}</h4>
+      <p>{{ descr }}</p>
       <hr>
     </div>
 
     <div class="to-to-item__status">
-      <input type="checkbox" id="checked-status" name="status-checkbox">
-      <label for="checked-status">Done</label>
+      <input type="checkbox" v-model="isChecked" name="status-checkbox">
+      <label>Done</label>
     </div>
   </div>
 </template>
@@ -20,7 +20,32 @@
 export default {
   name: 'TodoItem',
 
-  
+  data() {
+    return {
+      isChecked: false,
+    }
+  },
+
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    descr: {
+      type: String,
+      required: true
+    },
+    id: {
+      type: Number,
+      required: true
+    }
+  },
+
+  methods: {
+    removeItem() {
+      this.$emit('removeItem', this.id);
+    }
+  }
 }
 </script>
 
@@ -33,9 +58,14 @@ export default {
   padding: 10px;
   border-radius: 4px;
   width: 400px;
+  margin-bottom: 20px;
 
   p {
     margin-bottom: 15px;
+  }
+
+  &.done {
+    background: green;
   }
 }
 .close-button {
@@ -48,9 +78,12 @@ export default {
   background: url('../assets/img/close.png') center center/cover no-repeat;
   border: none;
   box-shadow: none;
+  border-radius: 100%;
+  overflow: hidden;
 
   &:hover {
     background: url('../assets/img/close.png') center center/cover no-repeat;
+    background-color: red;
 		box-shadow: none;
   }
 }
