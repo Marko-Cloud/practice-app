@@ -9,7 +9,7 @@
     </div>
 
     <div class="to-to-item__status">
-      <input type="checkbox" v-model="isChecked" name="status-checkbox">
+      <input type="checkbox" v-model="isChecked" @change="checkTaskStatus" name="status-checkbox">
       <label>Done</label>
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
 
   data() {
     return {
-      isChecked: false,
+      isChecked: false
     }
   },
 
@@ -38,12 +38,26 @@ export default {
     id: {
       type: Number,
       required: true
+    },
+    finished: {
+      type: Boolean
     }
+  },
+
+  created() {
+    // set "is done value"
+    console.log(this.isChecked, this.finished);
+    this.isChecked = this.finished;
   },
 
   methods: {
     removeItem() {
       this.$emit('removeItem', this.id);
+    },
+
+    checkTaskStatus() {
+      let valueArray = [this.id, this.isChecked];
+      this.$emit('checkTaskStatus', valueArray);
     }
   }
 }

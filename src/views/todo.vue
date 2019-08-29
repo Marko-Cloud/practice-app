@@ -8,19 +8,26 @@
       <button @click="createTask">Create task</button>
     </div>
 
-    <ToDoItem v-for="item in toDoList" :title="item.title" :descr="item.descr" :id="item.id" @removeItem="deleteItem" />
+    <ToDoItem v-for="item in toDoList" :title="item.title" 
+                                       :descr="item.descr" 
+                                       :id="item.id" 
+                                       :finished="item.finished"
+                                       @removeItem="deleteItem" 
+                                       @checkTaskStatus="checkTaskStatus" />
   </div>
 </template>
 
 <script>
 import ToDoItem from '../components/to-do-item.component';
 
-const toDoList = [
-  { title: 'Title-1', descr: 'some description 1' },
-  { title: 'Title-2', descr: 'some description 2' },
-  { title: 'Title-3', descr: 'some description 3' },
-  { title: 'Title-4', descr: 'some description 4' }
-];
+// const toDoList = [
+//   { title: 'Title-1', descr: 'some description 1' },
+//   { title: 'Title-2', descr: 'some description 2' },
+//   { title: 'Title-3', descr: 'some description 3' },
+//   { title: 'Title-4', descr: 'some description 4' }
+// ];
+
+// var listOfTasks = [];
 
 export default {
   name: 'todo',
@@ -33,6 +40,13 @@ export default {
     }
   },
 
+  created() {
+    //Get items from session storage
+    if (sessionStorage.getItem("toDoList") !== null) {
+      this.toDoList = JSON.parse(sessionStorage.getItem("toDoList"));
+    }
+  },
+
   methods: {
     createTask() {
       if (this.taskTitle == '' || this.taskDescr == '') {
@@ -40,16 +54,35 @@ export default {
 
         return;
       }
+      let timestampId = Date.now();
 
-      let newItem = { title: this.taskTitle, descr: this.taskDescr, id: this.toDoList.length };
+      let newItem = { title: this.taskTitle, descr: this.taskDescr, id: timestampId, finished: false };
       this.toDoList.push(newItem);
 
       this.taskTitle = '';
       this.taskDescr = '';
+
+      sessionStorage.setItem("toDoList", JSON.stringify(this.toDoList));
     },
 
     deleteItem(value) {
       this.toDoList = this.toDoList.filter(obj => obj.id !== value);
+      
+      sessionStorage.setItem("toDoList", JSON.stringify(this.toDoList));
+    },
+
+    checkTaskStatus(valueArray) { 
+      let taskId = valueArray[0];
+      let taskStatus = valueArray[1];
+
+      this.toDoList = this.toDoList.map(item => {
+        if (item.id === taskId) {
+          item = { ...item , finished: taskStatus };
+        }
+        return item;
+      });
+
+      sessionStorage.setItem("toDoList", JSON.stringify(this.toDoList));
     }
   },
 
