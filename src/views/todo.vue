@@ -5,7 +5,7 @@
     <div class="set-task-container">
       <input placeholder="Enter task title" v-model="taskTitle" type="text">
       <input placeholder="Enter task description" v-model="taskDescr" type="text">
-      <button @click="createTask">Create task</button>
+      <button @click="addFireBaseData">Create task</button>
     </div>
 
     <ToDoItem v-for="item in toDoList" :title="item.title" 
@@ -18,16 +18,26 @@
 </template>
 
 <script>
+// Firebase
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC0S3l1Tr-qPuiAgU6nzBaLiQLWzNrkhAY",
+  authDomain: "exercise-and-learning.firebaseapp.com",
+  databaseURL: "https://exercise-and-learning.firebaseio.com",
+  projectId: "exercise-and-learning",
+  storageBucket: "exercise-and-learning.appspot.com",
+  messagingSenderId: "860042799000",
+  appId: "1:860042799000:web:199e38a526dc0224"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Components
 import ToDoItem from '../components/to-do-item.component';
-
-// const toDoList = [
-//   { title: 'Title-1', descr: 'some description 1' },
-//   { title: 'Title-2', descr: 'some description 2' },
-//   { title: 'Title-3', descr: 'some description 3' },
-//   { title: 'Title-4', descr: 'some description 4' }
-// ];
-
-// var listOfTasks = [];
 
 export default {
   name: 'todo',
@@ -40,7 +50,7 @@ export default {
     }
   },
 
-  created() {
+  created() { 
     //Get items from session storage
     if (sessionStorage.getItem("toDoList") !== null) {
       this.toDoList = JSON.parse(sessionStorage.getItem("toDoList"));
@@ -48,6 +58,19 @@ export default {
   },
 
   methods: {
+    addFireBaseData() {
+      db.collection("users").add({
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815
+    })
+    .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+    },
     createTask() {
       if (this.taskTitle == '' || this.taskDescr == '') {
         alert('Please enter task Title and task description');
