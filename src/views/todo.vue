@@ -5,7 +5,7 @@
     <div class="set-task-container">
       <input placeholder="Enter task title" v-model="taskTitle" type="text">
       <input placeholder="Enter task description" v-model="taskDescr" type="text">
-      <button @click="addFireBaseData">Create task</button>
+      <button @click="createTask">Create task</button>
     </div>
 
     <ToDoItem v-for="item in toDoList" :title="item.title" 
@@ -51,26 +51,23 @@ export default {
   },
 
   created() { 
-    //Get items from session storage
-    if (sessionStorage.getItem("toDoList") !== null) {
-      this.toDoList = JSON.parse(sessionStorage.getItem("toDoList"));
-    }
+    //Get items from Firebase
+    let self = this;
+    db.collection("tasks").doc("NpERqekVUkF3hmEDmnJT").get().then(function(doc) {
+        if (doc.exists) {
+            console.log("Document data:", doc.data().tasks);
+
+            self.toDoList = doc.data().tasks;
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
   },
 
   methods: {
-    addFireBaseData() {
-      db.collection("users").add({
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
-    })
-    .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
-    },
     createTask() {
       if (this.taskTitle == '' || this.taskDescr == '') {
         alert('Please enter task Title and task description');
@@ -85,13 +82,20 @@ export default {
       this.taskTitle = '';
       this.taskDescr = '';
 
-      sessionStorage.setItem("toDoList", JSON.stringify(this.toDoList));
+      db.collection("tasks").doc("NpERqekVUkF3hmEDmnJT").update({
+          tasks: firebase.firestore.FieldValue.arrayUnion(newItem)
+      });
     },
 
     deleteItem(value) {
+      let deleteItem = this.toDoList.find(obj => obj.id == value);
       this.toDoList = this.toDoList.filter(obj => obj.id !== value);
+
+      console.log(deleteItem)
       
-      sessionStorage.setItem("toDoList", JSON.stringify(this.toDoList));
+      db.collection("tasks").doc("NpERqekVUkF3hmEDmnJT").update({
+          tasks: firebase.firestore.FieldValue.arrayRemove(deleteItem)
+      });
     },
 
     checkTaskStatus(valueArray) { 
